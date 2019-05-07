@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
+import {AddTodo} from './AddTodo/AddTodo'
 import './App.css';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+type newTodoObj = Record<string, string>
+
+interface IAppState {
+    currentTodos: newTodoObj[]
 }
 
-export default App;
+export default class App extends React.Component <any, IAppState> {
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            currentTodos: []
+        }
+    }
+
+    addTodoToState = (newTodo: newTodoObj) => {
+        console.log(newTodo);
+        this.setState({
+            currentTodos: this.state.currentTodos.concat(newTodo)
+        })
+    };
+
+    render() {
+        return (
+            <div className="App">
+                <AddTodo addTodoToState={this.addTodoToState}/>
+            </div>
+        );
+    }
+}
