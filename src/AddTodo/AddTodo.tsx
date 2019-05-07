@@ -1,10 +1,10 @@
 import React from 'react';
 
-export interface ITodoProps {
-    addTodoToState: (newTodoObj: Record<string, string>) => void
+export interface IAddTodoProps {
+    addTodoToState: (newTodoObj: Record<string, any>) => void
 }
 
-export class AddTodo extends React.Component <ITodoProps> {
+export class AddTodo extends React.Component <IAddTodoProps> {
 
     onSubmit = (event: any) => {
 
@@ -16,6 +16,7 @@ export class AddTodo extends React.Component <ITodoProps> {
         const todoTime = event.target.elements.todoTime.value;
 
         const newTodo = {
+            id: Math.random(),
             text: todoText,
             date: todoDate,
             time: todoTime
