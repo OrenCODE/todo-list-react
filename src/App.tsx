@@ -1,26 +1,23 @@
 import React, {Component} from 'react';
-// import {AddTodo} from './AddTodo/AddTodo'
-
-import {Todos} from './Todos/Todos'
+import AddTodo from './AddTodo/AddTodo';
+import Todos from './Todos/Todos'
 
 import './App.css';
 
-
-// export type newTodoObj = Record<string, any>
 export type TodoObj = Record<string, any>
 
 interface IAppState {
-    // currentTodos: newTodoObj[],
+
     todos: TodoObj[]
 }
 
-export default class App extends Component <any, IAppState> {
+class App extends Component <any, IAppState> {
 
     constructor(props: any) {
         super(props);
 
         this.state = {
-            // currentTodos: [],
+
             todos: [
                 {id: 1, title: 'finish this app', completed: false},
                 {id: 2, title: 'create storage', completed: false},
@@ -29,20 +26,38 @@ export default class App extends Component <any, IAppState> {
         }
     }
 
-    // addTodoToState = (newTodo: newTodoObj) => {
-    //
-    //     this.setState({
-    //         currentTodos: this.state.currentTodos.concat(newTodo)
-    //     })
-    // };
+    addTodoToState = (newTodo: TodoObj) => {
 
-
-    markComplete = () => {
-      console.log('check')
+        this.setState({
+            todos: this.state.todos.concat(newTodo)
+        })
     };
 
-    delTodo = () => {
-        console.log('check2')
+    //TODO TOGGLE COMPLETE
+    markComplete = (id: number) => {
+        const {todos} = this.state;
+
+        this.setState({
+            todos: todos.map(todo => {
+                if (todo.id === id) {
+                    todo.completed = !todo.completed
+                }
+                return todo;
+            })
+        });
+    };
+
+    //TODO DELETE FROM STATE
+    delTodo = (id: number) => {
+        const {todos} = this.state;
+
+        let todosArray = todos.filter(todo => {
+            return todo.id !== id;
+        });
+
+        this.setState({
+            todos: todosArray
+        });
     };
 
 
@@ -60,18 +75,22 @@ export default class App extends Component <any, IAppState> {
 
     render() {
 
-        // const {currentTodos} = this.state;
+        const {todos} = this.state;
 
         return (
             <div className="App">
                 <div className={"container"}>
                     <h1>Todo App</h1>
-                    <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
+                    <AddTodo addTodoToState={this.addTodoToState}/>
+                    <Todos todos={todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
                 </div>
             </div>
         );
     }
 }
+
+export default App
+
 
 // (
 // <AddTodo addTodoToState={this.addTodoToState}/>

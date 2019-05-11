@@ -4,19 +4,21 @@ import TodoItem from '../TodoItem/TodoItem'
 
 export interface ITodos {
     todos: TodoObj[]
-    markComplete: () => void
-    delTodo: () => void
+    markComplete: (index: number) => void
+    delTodo: (index: number) => void
 }
 
-export class Todos extends Component <ITodos> {
+class Todos extends Component <ITodos> {
 
     render() {
-        const {todos} = this.props;
+        const {todos, markComplete, delTodo} = this.props;
         return todos.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} markComplete={this.props.markComplete} delTodo={this.props.delTodo}/>
+            <TodoItem key={todo.id} todo={todo} markComplete={markComplete} delTodo={delTodo}/>
         ))
     }
 }
+
+export default Todos
 
 
 // export interface ITodos {
