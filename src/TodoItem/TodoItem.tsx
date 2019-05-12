@@ -26,7 +26,7 @@ class TodoItem extends Component <ITodoItem> {
                     </div>
                     }
 
-                <button onClick={() => delTodo(todo.id)}>Del</button>
+                <button className={"btn-sm btn-danger"} onClick={() => delTodo(todo.id)}>Del</button>
             </div>
         )
     }

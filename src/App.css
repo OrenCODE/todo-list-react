@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+.headerStyle {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+.linkStyle {
+  color: #fff;
+  text-decoration: none;
+}
+
 .todo-completed {
   text-decoration: line-through;
 }

@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route} from "react-router-dom"
+
 import AddTodo from './AddTodo/AddTodo';
 import Todos from './Todos/Todos'
+import About from './Pages/About';
+import Header from './Layout/Header'
 
 import './App.css';
 
 export type TodoObj = Record<string, any>
 
 interface IAppState {
-
     todos: TodoObj[]
 }
 
@@ -26,7 +29,8 @@ class App extends Component <any, IAppState> {
         }
     }
 
-    addTodoToState = (newTodo: TodoObj) => {
+    //TODO ADD TO STATE
+    addTodo = (newTodo: TodoObj) => {
 
         this.setState({
             todos: this.state.todos.concat(newTodo)
@@ -78,13 +82,20 @@ class App extends Component <any, IAppState> {
         const {todos} = this.state;
 
         return (
-            <div className="App">
-                <div className={"container"}>
-                    <h1>Todo App</h1>
-                    <AddTodo addTodoToState={this.addTodoToState}/>
-                    <Todos todos={todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
+            <Router>
+                <div className="App">
+                    <div className={"container"}>
+                        <Header/>
+                        <Route exact path="/" render={props => (
+                            <React.Fragment>
+                                <AddTodo addTodo={this.addTodo}/>
+                                <Todos todos={todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
+                            </React.Fragment>
+                        )}/>
+                    </div>
                 </div>
-            </div>
+                <Route path="/about" component={About}/>
+            </Router>
         );
     }
 }
