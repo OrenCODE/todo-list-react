@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from "react-router-dom"
+import axios from 'axios'
 
-import AddTodo from './AddTodo/AddTodo';
-import Todos from './Todos/Todos'
+import AddTodo from './Components/AddTodo/AddTodo';
+import Todos from './Components/Todos/Todos'
 import About from './Pages/About';
 import Header from './Layout/Header'
 
@@ -20,13 +21,15 @@ class App extends Component <any, IAppState> {
         super(props);
 
         this.state = {
-
-            todos: [
-                {id: 1, title: 'finish this app', completed: false},
-                {id: 2, title: 'create storage', completed: false},
-                {id: 3, title: 'connect storage to database', completed: false}
-            ]
+            todos: []
         }
+    }
+
+    componentDidMount() {
+        axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+            .then(res =>
+                this.setState({todos: res.data})
+            );
     }
 
     //TODO ADD TO STATE
@@ -35,6 +38,34 @@ class App extends Component <any, IAppState> {
         this.setState({
             todos: this.state.todos.concat(newTodo)
         })
+
+        // let title = newTodo.title;
+        // let id = newTodo.id;
+        //
+        // axios.post('https://jsonplaceholder.typicode.com/todos', {
+        //     id,
+        //     title,
+        //     completed: false
+        // })
+        //
+        //     .then(res =>
+        //         this.setState({todos: this.state.todos.concat(res.data)})
+        //     )
+    };
+
+    //TODO DELETE FROM STATE
+    delTodo = (id: number) => {
+        const {todos} = this.state;
+
+        let todosArray = todos.filter(todo => {
+            return todo.id !== id;
+        });
+
+        axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+            .then(res => this.setState({
+                todos: todosArray
+            }))
+
     };
 
     //TODO TOGGLE COMPLETE
@@ -50,20 +81,6 @@ class App extends Component <any, IAppState> {
             })
         });
     };
-
-    //TODO DELETE FROM STATE
-    delTodo = (id: number) => {
-        const {todos} = this.state;
-
-        let todosArray = todos.filter(todo => {
-            return todo.id !== id;
-        });
-
-        this.setState({
-            todos: todosArray
-        });
-    };
-
 
     // delTodoFromState = (id: number) => {
     //     const {currentTodos} = this.state;
@@ -101,18 +118,3 @@ class App extends Component <any, IAppState> {
 }
 
 export default App
-
-
-// (
-// <AddTodo addTodoToState={this.addTodoToState}/>
-// <div className={"todos"}>
-//     {currentTodos.map((todoObj, i) => {
-//             return (
-//                 <div key={i}>
-//                     <Todo id={todoObj.id} text={todoObj.text} date={todoObj.date} time={todoObj.time}
-//                           delTodoFromState={this.delTodoFromState}/>
-//                 </div>
-//             )
-//         }
-//     )}
-// </div>)

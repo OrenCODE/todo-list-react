@@ -2,10 +2,10 @@ import React from 'react';
 
 function About() {
     return (
-        <React.Fragment>
-            <h1>this is a todo list</h1>
-            <p>this is a new todo list</p>
-        </React.Fragment>
+        <div className={"container"}>
+            <h3>My todo List</h3>
+            <p>In this react project we use todos from a remote server, with update method and delete.</p>
+        </div>
     )
 }
 

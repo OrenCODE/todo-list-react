@@ -46,11 +46,11 @@ class AddTodo extends Component <IAddTodoProps> {
     render() {
         return (
             <div>
-                <form className={"searchForm"} onSubmit={this.handleSubmit}>
+                <form className={"form-inline"} onSubmit={this.handleSubmit}>
                     <label htmlFor={"title"}/>
-                    <input name={"title"} type={"text"} className={"form-control"} placeholder={"Add new Todo here..."}
+                    <input name={"title"} type={"text"} className={"form-control col sm-2"} placeholder={"Add new Todo here..."}
                            onChange={this.handleChange} value={this.state.title}/>
-                    <button className={"btn btn-primary"} type={"submit"}>Add Todo</button>
+                    <button className={"btn btn-outline-primary my-2 my-sm-0"} type={"submit"}>Add Todo</button>
                 </form>
             </div>
         )
@@ -58,10 +58,3 @@ class AddTodo extends Component <IAddTodoProps> {
 }
 
 export default AddTodo
-
-// (<label htmlFor={"date"}/>
-//     <input id={"date"} type={"date"} className={"form-control"} onChange={this.handleChange}
-// value={this.state.date}/>
-// <label htmlFor={"todoTime"}/>
-// <input id={"time"} type={"time"} className={"form-control"} onChange={this.handleChange}
-// value={this.state.time}/>)
